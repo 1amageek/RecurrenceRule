@@ -15,7 +15,7 @@ public struct RecurrenceRule: Codable {
         case monthly
         case yearly
 
-        var text: String {
+        public var text: String {
             switch self {
                 case .daily: return "day"
                 case .weekly: return "week"
@@ -34,7 +34,7 @@ public struct RecurrenceRule: Codable {
         case friday = 6
         case saturday = 7
 
-        var text: String {
+        public var text: String {
             switch self {
                 case .sunday: return "sunday"
                 case .monday: return "monday"
@@ -61,7 +61,7 @@ public struct RecurrenceRule: Codable {
         case november = 11
         case december = 12
 
-        var text: String {
+        public var text: String {
             switch self {
                 case .january: return "january"
                 case .february: return "february"
