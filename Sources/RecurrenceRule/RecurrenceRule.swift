@@ -83,7 +83,7 @@ public struct RecurrenceRule: Codable {
         public var dayOfTheWeek: Weekday
         public var weekNumber: Int
 
-        public init(dayOfTheWeek: Weekday, weekNumber: Int) {
+        public init(dayOfTheWeek: Weekday, weekNumber: Int = 0) {
 
             /// Values are from 1 to 7, with Sunday being 1.
             self.dayOfTheWeek = dayOfTheWeek
