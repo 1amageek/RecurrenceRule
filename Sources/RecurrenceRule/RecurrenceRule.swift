@@ -9,7 +9,7 @@ import Foundation
 
 public struct RecurrenceRule: Codable {
 
-    public enum Frequency: String, Codable, CaseIterable {
+    public enum Frequency: String, Codable, CaseIterable, Hashable {
         case daily
         case weekly
         case monthly
@@ -25,7 +25,7 @@ public struct RecurrenceRule: Codable {
         }
     }
 
-    public enum Weekday: Int, Codable, CaseIterable {
+    public enum Weekday: Int, Codable, CaseIterable, Hashable {
         case sunday = 1
         case monday = 2
         case tuesday = 3
@@ -47,7 +47,7 @@ public struct RecurrenceRule: Codable {
         }
     }
 
-    public enum Month: Int, Codable, CaseIterable {
+    public enum Month: Int, Codable, CaseIterable, Hashable {
         case january = 1
         case february = 2
         case march = 3
@@ -79,7 +79,7 @@ public struct RecurrenceRule: Codable {
         }
     }
 
-    public struct DayOfWeek: Codable {
+    public struct DayOfWeek: Codable, Hashable {
         public var dayOfTheWeek: Weekday
         public var weekNumber: Int
 
@@ -93,7 +93,7 @@ public struct RecurrenceRule: Codable {
         }
     }
 
-    public enum End: Codable {
+    public enum End: Codable, Hashable {
         case endDate(Date)
         case occurrenceCount(Int)
     }
@@ -180,5 +180,24 @@ extension RecurrenceRule.End {
                     )
                 )
         }
+    }
+}
+
+extension RecurrenceRule: Hashable {
+
+    public static func == (lhs: RecurrenceRule, rhs: RecurrenceRule) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(frequency)
+        hasher.combine(recurrenceEnd)
+        hasher.combine(interval)
+        hasher.combine(firstDayOfTheWeek)
+        hasher.combine(daysOfTheWeek)
+        hasher.combine(daysOfTheMonth)
+        hasher.combine(daysOfTheYear)
+        hasher.combine(weeksOfTheYear)
+        hasher.combine(monthsOfTheYear)
     }
 }
