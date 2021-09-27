@@ -25,7 +25,7 @@ public struct RecurrenceRule: Codable {
         }
     }
 
-    public enum Weekday: Int, Codable, CaseIterable, Hashable {
+    public enum Weekday: Int, Codable, CaseIterable, Hashable, RawRepresentable {
         case sunday = 1
         case monday = 2
         case tuesday = 3
@@ -47,7 +47,7 @@ public struct RecurrenceRule: Codable {
         }
     }
 
-    public enum Month: Int, Codable, CaseIterable, Hashable {
+    public enum Month: Int, Codable, CaseIterable, Hashable, RawRepresentable {
         case january = 1
         case february = 2
         case march = 3
