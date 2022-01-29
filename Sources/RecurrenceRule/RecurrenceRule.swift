@@ -201,3 +201,55 @@ extension RecurrenceRule: Hashable {
         hasher.combine(monthsOfTheYear)
     }
 }
+
+extension RecurrenceRule {
+
+    public static var everyday: RecurrenceRule {
+        RecurrenceRule(frequency: .daily, interval: 1)
+    }
+
+    public static var weekday: RecurrenceRule {
+        RecurrenceRule(
+            frequency: .weekly,
+            interval: 1,
+            firstDayOfTheWeek: RecurrenceRule.Weekday.monday.rawValue,
+            daysOfTheWeek: [
+            DayOfWeek(dayOfTheWeek: .monday),
+            DayOfWeek(dayOfTheWeek: .tuesday),
+            DayOfWeek(dayOfTheWeek: .wednesday),
+            DayOfWeek(dayOfTheWeek: .thursday),
+            DayOfWeek(dayOfTheWeek: .friday)
+        ])
+    }
+
+    public static var weekend: RecurrenceRule {
+        RecurrenceRule(
+            frequency: .weekly,
+            interval: 1,
+            firstDayOfTheWeek: RecurrenceRule.Weekday.monday.rawValue,
+            daysOfTheWeek: [
+            DayOfWeek(dayOfTheWeek: .sunday),
+            DayOfWeek(dayOfTheWeek: .thursday)
+        ])
+    }
+
+    public static var everyWeek: RecurrenceRule {
+        RecurrenceRule(frequency: .weekly, interval: 1)
+    }
+
+    public static var everyOtherWeek: RecurrenceRule {
+        RecurrenceRule(frequency: .weekly, interval: 2)
+    }
+
+    public static var everyMonth: RecurrenceRule {
+        RecurrenceRule(frequency: .monthly, interval: 1)
+    }
+
+    public static var every3Months: RecurrenceRule {
+        RecurrenceRule(frequency: .monthly, interval: 3)
+    }
+
+    public static var every6Months: RecurrenceRule {
+        RecurrenceRule(frequency: .monthly, interval: 6)
+    }
+}
