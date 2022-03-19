@@ -1,0 +1,29 @@
+
+// Frequency
+"daily" = "日間";
+"weekly" = "週間";
+"monthly" = "月間";
+"yearly" = "年間";
+
+// Weekday
+"sunday" = "日曜日";
+"monday" = "月曜日";
+"tuesday" = "火曜日";
+"wednesday" = "";
+"thursday" = "thursday";
+"friday" = "friday";
+"saturday" = "saturday";
+
+// Month
+"january" = "1月";
+"february" = "2月";
+"march" = "3月";
+"april" = "4月";
+"may" = "5月";
+"june" = "6月";
+"july" = "7月";
+"august" = "8月";
+"september" = "9月";
+"october" = "10月";
+"november" = "11月";
+"december" = "12月";
