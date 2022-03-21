@@ -23,6 +23,14 @@ public struct RecurrenceRule: Codable {
                 case .yearly: return "year"
             }
         }
+
+        public var localizedString: String {
+            let languageCode: String = Locale(identifier: Locale.preferredLanguages.first!).languageCode ?? "en"
+            guard let path = Bundle.module.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: path) else {
+                fatalError()
+            }
+            return NSLocalizedString(self.rawValue, tableName: nil, bundle: bundle, value: self.rawValue, comment: self.rawValue)
+        }
     }
     
     public enum Weekday: Int, Codable, CaseIterable, Hashable, RawRepresentable {
