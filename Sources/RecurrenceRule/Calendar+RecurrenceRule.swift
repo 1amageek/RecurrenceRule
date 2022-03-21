@@ -51,6 +51,10 @@ extension Calendar {
         }
     }
 
+    public func contains(_ date: Date, in recurrenceRules: [RecurrenceRule], occurenceDate: Date) -> Bool {
+        recurrenceRules.contains { contains(date, in: $0, occurenceDate: occurenceDate) }
+    }
+
     public func contains(_ date: Date, in recurrenceRule: RecurrenceRule, occurenceDate: Date) -> Bool {
         let end: RecurrenceRule.End? = recurrenceRule.recurrenceEnd
         let isMatchingCycle = matchesCycle(date, of: recurrenceRule, occurenceDate: occurenceDate, end: end)
