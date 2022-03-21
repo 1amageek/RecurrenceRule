@@ -87,6 +87,7 @@ public struct RecurrenceRule: Codable {
         public static var monday: Self { DayOfWeek(dayOfTheWeek: .monday) }
         public static var tuesday: Self { DayOfWeek(dayOfTheWeek: .tuesday) }
         public static var wednesday: Self { DayOfWeek(dayOfTheWeek: .wednesday) }
+        public static var thursday: Self { DayOfWeek(dayOfTheWeek: .thursday) }
         public static var friday: Self { DayOfWeek(dayOfTheWeek: .friday) }
         public static var saturday: Self { DayOfWeek(dayOfTheWeek: .saturday) }
     }
