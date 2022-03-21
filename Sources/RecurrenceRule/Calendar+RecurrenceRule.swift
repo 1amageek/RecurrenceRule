@@ -28,23 +28,37 @@ extension Calendar {
             return false
         }
         let interval: Int = recurrenceRule.interval
+        let offset: Int = recurrenceRule.offset
         switch recurrenceRule.frequency {
             case .daily:
-                let day = self.dateComponents([.day], from: occurenceDate, to: date).day!
+                let day = self.dateComponents([.day], from: occurenceDate, to: date).day! - offset
+                if offset != 0, day <= 0 {
+                    return false
+                }
+                guard day != 0 else { return true }
                 let (count, remainder) = day.quotientAndRemainder(dividingBy: interval)
                 return remainder == 0 && hasNotExceededOccurrenceCount(count, end: end)
             case .weekly:
-                let weekOfMonth = self.dateComponents([.weekOfMonth], from: startDayOfWeekOfMonth(occurenceDate), to: date).weekOfMonth!
+                let weekOfMonth = self.dateComponents([.weekOfMonth], from: startDayOfWeekOfMonth(occurenceDate), to: date).weekOfMonth! - offset
+                if offset != 0, weekOfMonth <= 0 {
+                    return false
+                }
                 guard weekOfMonth != 0 else { return true }
                 let (count, remainder) = weekOfMonth.quotientAndRemainder(dividingBy: interval)
                 return remainder == 0 && hasNotExceededOccurrenceCount(count, end: end)
             case .monthly:
-                let month = self.dateComponents([.month], from: startDayOfMonth(occurenceDate), to: date).month!
+                let month = self.dateComponents([.month], from: startDayOfMonth(occurenceDate), to: date).month! - offset
+                if offset != 0, month <= 0 {
+                    return false
+                }
                 guard month != 0 else { return true }
                 let (count, remainder) = month.quotientAndRemainder(dividingBy: interval)
                 return remainder == 0 && hasNotExceededOccurrenceCount(count, end: end)
             case .yearly:
-                let year = self.dateComponents([.year], from: startDayOfYear(occurenceDate), to: date).year!
+                let year = self.dateComponents([.year], from: startDayOfYear(occurenceDate), to: date).year! - offset
+                if offset != 0, year <= 0 {
+                    return false
+                }
                 guard year != 0 else { return true }
                 let (count, remainder) = year.quotientAndRemainder(dividingBy: interval)
                 return remainder == 0 && hasNotExceededOccurrenceCount(count, end: end)

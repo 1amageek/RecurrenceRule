@@ -113,7 +113,6 @@ final class WeeklyTests: XCTestCase {
         XCTAssertEqual(matching(targetDate(day: 30, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 31, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 32, to: startDate), rule: rule), false)
-
     }
 
     func testInterval1Monday() throws {
@@ -214,5 +213,41 @@ final class WeeklyTests: XCTestCase {
         XCTAssertEqual(matching(targetDate(week: 11, day: 2, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(week: 12, day: 2, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(week: 13, day: 2, to: startDate), rule: rule), true)
+    }
+
+    func testInterval2Offset1() throws {
+        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, interval: 2, offset: 1)
+        XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 4, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 5, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 6, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 7, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 8, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 9, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 10, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 11, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 12, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 13, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 14, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 15, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 16, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 17, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 18, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 19, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 20, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 21, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(day: 22, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 23, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 24, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 25, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 26, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 27, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 28, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 29, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 30, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 31, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(day: 32, to: startDate), rule: rule), false)
     }
 }

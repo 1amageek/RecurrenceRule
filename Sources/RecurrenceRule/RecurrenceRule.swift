@@ -82,6 +82,13 @@ public struct RecurrenceRule: Codable {
             /// Values range from –53 to 53.
             self.weekNumber = weekNumber
         }
+
+        public static var sunday: Self { DayOfWeek(dayOfTheWeek: .sunday) }
+        public static var monday: Self { DayOfWeek(dayOfTheWeek: .monday) }
+        public static var tuesday: Self { DayOfWeek(dayOfTheWeek: .tuesday) }
+        public static var wednesday: Self { DayOfWeek(dayOfTheWeek: .wednesday) }
+        public static var friday: Self { DayOfWeek(dayOfTheWeek: .friday) }
+        public static var saturday: Self { DayOfWeek(dayOfTheWeek: .saturday) }
     }
     
     public enum End: Codable, Hashable {
@@ -94,6 +101,8 @@ public struct RecurrenceRule: Codable {
     public var recurrenceEnd: End?
     
     public var interval: Int
+
+    public var offset: Int
     
     /// Values of 1 to 7 correspond to Sunday through Saturday. A value of 0 indicates that this property is not set for the recurrence rule.
     public var firstDayOfTheWeek: Int = 0       // 最初の曜日
@@ -117,6 +126,7 @@ public struct RecurrenceRule: Codable {
         frequency: Frequency,
         recurrenceEnd: End? = nil,
         interval: Int,
+        offset: Int = 0,
         firstDayOfTheWeek: Int = 0,
         daysOfTheWeek: [DayOfWeek]? = nil,
         daysOfTheMonth: [Int]? = nil,
@@ -127,6 +137,7 @@ public struct RecurrenceRule: Codable {
         self.frequency = frequency
         self.recurrenceEnd = recurrenceEnd
         self.interval = interval
+        self.offset = offset
         self.firstDayOfTheWeek = firstDayOfTheWeek
         self.daysOfTheWeek = daysOfTheWeek
         self.daysOfTheMonth = daysOfTheMonth
@@ -142,6 +153,7 @@ extension RecurrenceRule {
         frequency: Frequency,
         recurrenceEnd: End? = nil,
         interval: Int,
+        offset: Int = 0,
         daysOfTheWeek: [DayOfWeek]? = nil,
         daysOfTheMonth: [Int]? = nil,
         daysOfTheYear: [Int]? = nil,
@@ -151,6 +163,7 @@ extension RecurrenceRule {
         RecurrenceRule(frequency: frequency,
                        recurrenceEnd: recurrenceEnd,
                        interval: interval,
+                       offset: offset,
                        firstDayOfTheWeek: Weekday.sunday.rawValue,
                        daysOfTheWeek: daysOfTheWeek,
                        daysOfTheMonth: daysOfTheMonth,
@@ -163,6 +176,7 @@ extension RecurrenceRule {
         frequency: Frequency,
         recurrenceEnd: End? = nil,
         interval: Int,
+        offset: Int = 0,
         daysOfTheWeek: [DayOfWeek]? = nil,
         daysOfTheMonth: [Int]? = nil,
         daysOfTheYear: [Int]? = nil,
@@ -172,6 +186,7 @@ extension RecurrenceRule {
         RecurrenceRule(frequency: frequency,
                        recurrenceEnd: recurrenceEnd,
                        interval: interval,
+                       offset: offset,
                        firstDayOfTheWeek: Weekday.monday.rawValue,
                        daysOfTheWeek: daysOfTheWeek,
                        daysOfTheMonth: daysOfTheMonth,
