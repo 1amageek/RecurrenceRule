@@ -70,6 +70,7 @@ extension Calendar {
     }
 
     public func contains(_ date: Date, in recurrenceRule: RecurrenceRule, occurenceDate: Date) -> Bool {
+        guard date > occurenceDate else { return false }
         let end: RecurrenceRule.End? = recurrenceRule.recurrenceEnd
         let isMatchingCycle = matchesCycle(date, of: recurrenceRule, occurenceDate: occurenceDate, end: end)
         switch recurrenceRule.frequency {
