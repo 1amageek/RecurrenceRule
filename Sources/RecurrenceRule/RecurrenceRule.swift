@@ -243,6 +243,7 @@ extension RecurrenceRule: Hashable {
         hasher.combine(frequency)
         hasher.combine(recurrenceEnd)
         hasher.combine(interval)
+        hasher.combine(offset)
         hasher.combine(firstDayOfTheWeek)
         hasher.combine(daysOfTheWeek)
         hasher.combine(daysOfTheMonth)
