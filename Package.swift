@@ -5,7 +5,6 @@ import PackageDescription
 
 let package = Package(
     name: "RecurrenceRule",
-    defaultLocalization: "en",
     products: [
         .library(
             name: "RecurrenceRule",
