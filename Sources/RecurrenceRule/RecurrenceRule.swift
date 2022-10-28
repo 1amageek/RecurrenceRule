@@ -25,8 +25,9 @@ public struct RecurrenceRule: Codable {
         case friday = 6
         case saturday = 7
         
-        public var text: String {
-            let calendar: Calendar = Calendar(identifier: .gregorian)
+        public var symbol: String {
+            var calendar: Calendar = Calendar(identifier: .iso8601)
+            calendar.locale = .autoupdatingCurrent
             let index: Int = rawValue - 1
             return calendar.weekdaySymbols[index]
         }
