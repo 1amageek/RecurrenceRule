@@ -66,15 +66,12 @@ extension Calendar {
     }
 
     public func contains(_ date: Date, in recurrenceRules: [RecurrenceRule], occurenceDate: Date) -> Bool {
-        if recurrenceRules.isEmpty {
-            return self.isDate(date, inSameDayAs: occurenceDate)
-        } else {
-            return recurrenceRules.contains { contains(date, in: $0, occurenceDate: occurenceDate) }
-        }
+        if recurrenceRules.isEmpty { return false }
+        return recurrenceRules.contains { contains(date, in: $0, occurenceDate: occurenceDate) }
     }
 
     public func contains(_ date: Date, in recurrenceRule: RecurrenceRule, occurenceDate: Date) -> Bool {
-        guard date > occurenceDate else { return false }
+        guard date >= occurenceDate else { return false }
         let end: RecurrenceRule.End? = recurrenceRule.recurrenceEnd
         let isMatchingCycle = matchesCycle(date, of: recurrenceRule, occurenceDate: occurenceDate, end: end)
         switch recurrenceRule.frequency {
