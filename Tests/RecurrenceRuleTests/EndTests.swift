@@ -32,12 +32,12 @@ final class EndTests: XCTestCase {
         return targetDate
     }
 
-    func matching(_ date: Date, rule: RecurrenceRule) -> Bool {
+    func matching(_ date: Date, rule: Legacy.RecurrenceRule) -> Bool {
         return calendar.contains(date, in: rule, occurenceDate: startDate)
     }
 
     func testDaily() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .daily, recurrenceEnd: .endDate(endDate), interval: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .daily, recurrenceEnd: .endDate(endDate), interval: 1)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 5, day: 3).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 5, day: 4).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 5, day: 5).date!, rule: rule), false)
@@ -45,7 +45,7 @@ final class EndTests: XCTestCase {
     }
 
     func testWeekly() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, recurrenceEnd: .endDate(endDate), interval: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .weekly, recurrenceEnd: .endDate(endDate), interval: 1)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 4, day: 22).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 4, day: 29).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 5, day: 6).date!, rule: rule), false)
@@ -53,7 +53,7 @@ final class EndTests: XCTestCase {
     }
 
     func testMonthly() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, recurrenceEnd: .endDate(endDate), interval: 1, daysOfTheMonth: [5, 6])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, recurrenceEnd: .endDate(endDate), interval: 1, daysOfTheMonth: [5, 6])
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 4, day: 5).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 4, day: 6).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2024, month: 5, day: 5).date!, rule: rule), false)
@@ -61,7 +61,7 @@ final class EndTests: XCTestCase {
     }
 
     func testYearly() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .yearly, recurrenceEnd: .endDate(endDate), interval: 1, monthsOfTheYear: [.may])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .yearly, recurrenceEnd: .endDate(endDate), interval: 1, monthsOfTheYear: [.may])
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2022, month: 5, day: 1).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2023, month: 5, day: 1).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2024, month: 5, day: 1).date!, rule: rule), false)

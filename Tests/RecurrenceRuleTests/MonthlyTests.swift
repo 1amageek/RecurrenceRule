@@ -30,12 +30,12 @@ final class MonthlyTests: XCTestCase {
         return targetDate
     }
 
-    func matching(_ date: Date, rule: RecurrenceRule) -> Bool {
+    func matching(_ date: Date, rule: Legacy.RecurrenceRule) -> Bool {
         return calendar.contains(date, in: rule, occurenceDate: startDate)
     }
 
     func testInterval1() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 1)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -85,7 +85,7 @@ final class MonthlyTests: XCTestCase {
     }
 
     func testInterval2() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 2)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 2)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -136,71 +136,71 @@ final class MonthlyTests: XCTestCase {
     }
 
     func testInterval1Monday() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday)])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday)])
 
-        XCTAssertEqual(matching(targetDate(month: 1, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 2, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 3, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 4, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 5, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 6, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 7, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 8, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 9, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 10, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 11, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 12, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 13, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 1, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 2, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 3, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 4, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 5, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 6, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 7, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 8, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 9, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 10, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 11, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 12, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 13, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
     }
 
     func testInterval1MondayFriday() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday), .init(dayOfTheWeek: .friday)])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday), .init(dayOfTheWeek: .friday)])
 
-        XCTAssertEqual(matching(targetDate(month: 1, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 2, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 3, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 4, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 5, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 6, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 7, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 8, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 9, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 10, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 11, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 12, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 13, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 1, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 2, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 3, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 4, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 5, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 6, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 7, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 8, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 9, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 10, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 11, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 12, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 13, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
 
-        XCTAssertEqual(matching(targetDate(month: 1, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 2, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 3, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 4, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 5, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 6, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 7, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 8, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 9, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 10, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 11, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 12, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 13, weekday: RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 1, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 2, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 3, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 4, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 5, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 6, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 7, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 8, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 9, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 10, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 11, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 12, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 13, weekday: Legacy.RecurrenceRule.Weekday.friday.rawValue, to: startDate), rule: rule), true)
     }
 
     func testInterval1MondayWeekNumber() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday, weekNumber: 2)])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday, weekNumber: 2)])
 
-        XCTAssertEqual(matching(targetDate(month: 1, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false) // monday is january
-        XCTAssertEqual(matching(targetDate(month: 1, week: 1, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 1, week: 2, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
-        XCTAssertEqual(matching(targetDate(month: 1, week: 3, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
-        XCTAssertEqual(matching(targetDate(month: 1, week: 4, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
-        XCTAssertEqual(matching(targetDate(month: 2, week: 1, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
-        XCTAssertEqual(matching(targetDate(month: 2, week: 2, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
-        XCTAssertEqual(matching(targetDate(month: 2, week: 3, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
-        XCTAssertEqual(matching(targetDate(month: 2, week: 4, weekday: RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(month: 1, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false) // monday is january
+        XCTAssertEqual(matching(targetDate(month: 1, week: 1, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 1, week: 2, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(month: 1, week: 3, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(month: 1, week: 4, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(month: 2, week: 1, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), true)
+        XCTAssertEqual(matching(targetDate(month: 2, week: 2, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(month: 2, week: 3, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
+        XCTAssertEqual(matching(targetDate(month: 2, week: 4, weekday: Legacy.RecurrenceRule.Weekday.monday.rawValue, to: startDate), rule: rule), false)
     }
 
     func testInterval1Days() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheMonth: [1, 3, 5, 7, 9])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 1, daysOfTheMonth: [1, 3, 5, 7, 9])
 
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2022, month: 2, day: 1).date!, rule: rule), true)
         XCTAssertEqual(matching(DateComponents(calendar: calendar, timeZone: timeZone, year: 2022, month: 2, day: 2).date!, rule: rule), false)
@@ -246,7 +246,7 @@ final class MonthlyTests: XCTestCase {
     }
 
     func testInterval2Offset1() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .monthly, interval: 2, offset: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .monthly, interval: 2, offset: 1)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)

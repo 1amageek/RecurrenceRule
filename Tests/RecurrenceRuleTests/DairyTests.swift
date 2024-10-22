@@ -22,12 +22,12 @@ final class DairyTests: XCTestCase {
         return targetDate
     }
 
-    func matching(_ date: Date, rule: RecurrenceRule) -> Bool {
+    func matching(_ date: Date, rule: Legacy.RecurrenceRule) -> Bool {
         return calendar.contains(date, in: rule, occurenceDate: startDate)
     }
 
     func testInterval1() throws {
-        let rule: RecurrenceRule = RecurrenceRule(frequency: .daily, interval: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule(frequency: .daily, interval: 1)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), true)
@@ -83,7 +83,7 @@ final class DairyTests: XCTestCase {
     }
 
     func testInterval2() throws {
-        let rule: RecurrenceRule = RecurrenceRule(frequency: .daily, interval: 2)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule(frequency: .daily, interval: 2)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -119,7 +119,7 @@ final class DairyTests: XCTestCase {
     }
 
     func testInterval1Offset1() throws {
-        let rule: RecurrenceRule = RecurrenceRule(frequency: .daily, interval: 1, offset: 2)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule(frequency: .daily, interval: 1, offset: 2)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), true)

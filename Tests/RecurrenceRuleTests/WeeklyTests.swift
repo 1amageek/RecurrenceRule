@@ -25,12 +25,12 @@ final class WeeklyTests: XCTestCase {
         return targetDate
     }
 
-    func matching(_ date: Date, rule: RecurrenceRule) -> Bool {
+    func matching(_ date: Date, rule: Legacy.RecurrenceRule) -> Bool {
         return calendar.contains(date, in: rule, occurenceDate: startDate)
     }
 
     func testInterval1() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, interval: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .weekly, interval: 1)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -80,7 +80,7 @@ final class WeeklyTests: XCTestCase {
     }
 
     func testInterval2() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, interval: 2)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .weekly, interval: 2)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -116,7 +116,7 @@ final class WeeklyTests: XCTestCase {
     }
 
     func testInterval1Monday() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday)])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .weekly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday)])
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -166,7 +166,7 @@ final class WeeklyTests: XCTestCase {
     }
 
     func testInterval1MondayFriday() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday), .init(dayOfTheWeek: .friday)])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .weekly, interval: 1, daysOfTheWeek: [.init(dayOfTheWeek: .monday), .init(dayOfTheWeek: .friday)])
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), true)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -216,7 +216,7 @@ final class WeeklyTests: XCTestCase {
     }
 
     func testInterval2Offset1() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .weekly, interval: 2, offset: 1)
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .weekly, interval: 2, offset: 1)
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)

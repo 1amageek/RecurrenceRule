@@ -30,12 +30,12 @@ final class YearlyTests: XCTestCase {
         return targetDate
     }
 
-    func matching(_ date: Date, rule: RecurrenceRule) -> Bool {
+    func matching(_ date: Date, rule: Legacy.RecurrenceRule) -> Bool {
         return calendar.contains(date, in: rule, occurenceDate: startDate)
     }
 
     func testInterval1() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .yearly, interval: 1, monthsOfTheYear: [.january])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .yearly, interval: 1, monthsOfTheYear: [.january])
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -85,7 +85,7 @@ final class YearlyTests: XCTestCase {
     }
 
     func testInterval2() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .yearly, interval: 2, monthsOfTheYear: [.january])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .yearly, interval: 2, monthsOfTheYear: [.january])
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)
@@ -136,7 +136,7 @@ final class YearlyTests: XCTestCase {
     }
 
     func testInterval1MonthsOfYear() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .yearly, interval: 1, monthsOfTheYear: [.january, .march, .may, .july, .september])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .yearly, interval: 1, monthsOfTheYear: [.january, .march, .may, .july, .september])
 
         XCTAssertEqual(matching(targetDate(month: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(month: 2, to: startDate), rule: rule), true)
@@ -166,7 +166,7 @@ final class YearlyTests: XCTestCase {
     }
 
     func testInterval1MonthsOfYearsAndDaysOfMonths() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .yearly,
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .yearly,
                                                           interval: 1,
                                                           daysOfTheWeek: [.init(dayOfTheWeek: .monday, weekNumber: 2)],
                                                           monthsOfTheYear: [.january, .march, .may, .july, .september])
@@ -186,7 +186,7 @@ final class YearlyTests: XCTestCase {
     }
 
     func testInterval2Offset1() throws {
-        let rule: RecurrenceRule = RecurrenceRule.iso8601(frequency: .yearly, interval: 2, offset: 1, monthsOfTheYear: [.january])
+        let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule.iso8601(frequency: .yearly, interval: 2, offset: 1, monthsOfTheYear: [.january])
         XCTAssertEqual(matching(targetDate(day: 1, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 2, to: startDate), rule: rule), false)
         XCTAssertEqual(matching(targetDate(day: 3, to: startDate), rule: rule), false)

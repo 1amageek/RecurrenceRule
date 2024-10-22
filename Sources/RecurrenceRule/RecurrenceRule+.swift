@@ -9,7 +9,7 @@ import Foundation
 
 extension Legacy.RecurrenceRule {
  
-    @available(iOS 18, macOS 14, *)
+    @available(iOS 18, macOS 15, *)
     public func toCalendarRecurrenceRule() -> Calendar.RecurrenceRule {
         let calendar = Calendar(identifier: self.firstDayOfTheWeek == Legacy.RecurrenceRule.Weekday.monday.rawValue ? .iso8601 : .gregorian)
         let frequency: Calendar.RecurrenceRule.Frequency
@@ -116,5 +116,126 @@ extension Legacy.RecurrenceRule {
                 end: end
             )
         }
+    }
+}
+
+@available(iOS 18, macOS 15, *)
+extension Calendar.RecurrenceRule {
+    
+    func toLegacyRecurrenceRule() -> Legacy.RecurrenceRule {
+
+        let frequency: Legacy.RecurrenceRule.Frequency
+        switch self.frequency {
+        case .daily:
+            frequency = .daily
+        case .weekly:
+            frequency = .weekly
+        case .monthly:
+            frequency = .monthly
+        case .yearly:
+            frequency = .yearly
+        case .minutely:
+            fatalError()
+        case .hourly:
+            fatalError()
+        @unknown default:
+            fatalError()
+        }
+        
+        // 終了条件の変換
+        let recurrenceEnd: Legacy.RecurrenceRule.End?
+        if let occurrences = self.end.occurrences {
+            recurrenceEnd = .occurrenceCount(occurrences)
+        } else if let date = self.end.date {
+            recurrenceEnd = .endDate(date)
+        } else {
+            recurrenceEnd = nil
+        }
+        
+        // 曜日の変換
+        let daysOfTheWeek: [Legacy.RecurrenceRule.DayOfWeek] = self.weekdays.compactMap { weekday in
+            let legacyWeekday: Legacy.RecurrenceRule.Weekday
+            switch weekday {
+            case .every(let day), .nth(_, let day):
+                switch day {
+                case .sunday:
+                    legacyWeekday = .sunday
+                case .monday:
+                    legacyWeekday = .monday
+                case .tuesday:
+                    legacyWeekday = .tuesday
+                case .wednesday:
+                    legacyWeekday = .wednesday
+                case .thursday:
+                    legacyWeekday = .thursday
+                case .friday:
+                    legacyWeekday = .friday
+                case .saturday:
+                    legacyWeekday = .saturday
+                @unknown default:
+                    fatalError()
+                }
+            @unknown default:
+                fatalError()
+            }
+            
+            let weekNumber: Int
+            switch weekday {
+            case .every(_):
+                weekNumber = 0
+            case .nth(let n, _):
+                weekNumber = n
+            @unknown default:
+                fatalError()
+            }
+            
+            return Legacy.RecurrenceRule.DayOfWeek(dayOfTheWeek: legacyWeekday, weekNumber: weekNumber)
+        }
+        
+        // 月の変換
+        let monthsOfTheYear: [Legacy.RecurrenceRule.Month] = self.months.compactMap { month in
+            Legacy.RecurrenceRule.Month(rawValue: month.index)
+        }
+        
+        // カレンダー形式の判定
+        let firstDayOfTheWeek = self.calendar.identifier == .iso8601 ?
+        Legacy.RecurrenceRule.Weekday.monday.rawValue :
+        Legacy.RecurrenceRule.Weekday.sunday.rawValue
+        
+        return Legacy.RecurrenceRule(
+            frequency: frequency,
+            recurrenceEnd: recurrenceEnd,
+            interval: self.interval,
+            offset: 0, // Calendarには対応する値がないため、デフォルト値を使用
+            firstDayOfTheWeek: firstDayOfTheWeek,
+            daysOfTheWeek: daysOfTheWeek.isEmpty ? nil : daysOfTheWeek,
+            daysOfTheMonth: self.daysOfTheMonth.isEmpty ? nil : self.daysOfTheMonth,
+            daysOfTheYear: self.daysOfTheYear.isEmpty ? nil : self.daysOfTheYear,
+            weeksOfTheYear: self.weeks.isEmpty ? nil : self.weeks,
+            monthsOfTheYear: monthsOfTheYear.isEmpty ? nil : monthsOfTheYear
+        )
+    }
+}
+
+@available(iOS 18, macOS 15, *)
+extension Calendar.RecurrenceRule.End {
+    
+    var occurrences: Int? {
+        guard let data = try? JSONEncoder().encode(self),
+              let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+              let occurrences = jsonObject["count"] as? Int else {
+            return nil
+        }
+        return occurrences
+    }
+    
+    var date: Date? {
+        guard let data = try? JSONEncoder().encode(self),
+              let jsonObject: [String: Any] = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let timestamp = jsonObject["until"] as? TimeInterval else {
+            return nil
+        }
+        let date = Date(timeIntervalSinceReferenceDate: timestamp)
+        return date
     }
 }
