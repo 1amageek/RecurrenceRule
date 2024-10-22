@@ -9,16 +9,16 @@ import Foundation
 
 public enum Legacy {
     
-    public struct RecurrenceRule: Codable {
+    public struct RecurrenceRule: Codable, Sendable {
         
-        public enum Frequency: String, Codable, CaseIterable, Hashable {
+        public enum Frequency: String, Codable, CaseIterable, Hashable, Sendable {
             case daily
             case weekly
             case monthly
             case yearly
         }
         
-        public enum Weekday: Int, Codable, CaseIterable, Hashable, RawRepresentable {
+        public enum Weekday: Int, Codable, CaseIterable, Hashable, RawRepresentable, Sendable {
             case sunday = 1
             case monday = 2
             case tuesday = 3
@@ -35,7 +35,7 @@ public enum Legacy {
             }
         }
         
-        public enum Month: Int, Codable, CaseIterable, Hashable, RawRepresentable {
+        public enum Month: Int, Codable, CaseIterable, Hashable, RawRepresentable, Sendable {
             case january = 1
             case february = 2
             case march = 3
@@ -56,7 +56,7 @@ public enum Legacy {
             }
         }
         
-        public struct DayOfWeek: Codable, Hashable {
+        public struct DayOfWeek: Codable, Hashable, Sendable {
             public var dayOfTheWeek: Weekday
             public var weekNumber: Int
             
@@ -78,7 +78,7 @@ public enum Legacy {
             public static var saturday: Self { DayOfWeek(dayOfTheWeek: .saturday) }
         }
         
-        public enum End: Codable, Hashable {
+        public enum End: Codable, Hashable, Sendable {
             case endDate(Date)
             case occurrenceCount(Int)
         }
