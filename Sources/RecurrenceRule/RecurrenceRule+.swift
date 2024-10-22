@@ -122,7 +122,7 @@ extension Legacy.RecurrenceRule {
 @available(iOS 18, macOS 15, *)
 extension Calendar.RecurrenceRule {
     
-    func toLegacyRecurrenceRule() -> Legacy.RecurrenceRule {
+    public func toLegacyRecurrenceRule() -> Legacy.RecurrenceRule {
 
         let frequency: Legacy.RecurrenceRule.Frequency
         switch self.frequency {
