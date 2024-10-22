@@ -1,4 +1,5 @@
 import UIKit
+import Foundation
 import RecurrenceRule
 
 let calendar: Calendar = Calendar(identifier: .iso8601)
@@ -6,7 +7,7 @@ let timeZone: TimeZone = .current
 print(timeZone)
 let dateFormatter = ISO8601DateFormatter()
 dateFormatter.timeZone = timeZone
-let rule: RecurrenceRule = RecurrenceRule(frequency: .weekly, interval: 2, firstDayOfTheWeek: 1, daysOfTheWeek: [.init(dayOfTheWeek: .friday, weekNumber: 1)])
+let rule: Legacy.RecurrenceRule = Legacy.RecurrenceRule(frequency: .weekly, interval: 2, firstDayOfTheWeek: 1, daysOfTheWeek: [.init(dayOfTheWeek: .friday, weekNumber: 1)])
 
 
 
@@ -28,30 +29,18 @@ if rule.frequency == .weekly {
 let isDate = calendar.isDate(date0, equalTo: date1, toGranularity: .weekday)
 
 print(isDate)
-//
-//let result = calendar.compare(date0, to: date1, toGranularity: .weekday)
-//
-//switch result {
-//    case .orderedAscending: print("Ascending")
-//    case .orderedDescending: print("Descending")
-//    case .orderedSame: print("Same")
-//}
-//
-//calendar.date(date0, matchesComponents: DateComponents(calendar: .current, timeZone: .current, year: 2022, month: 3, day: 24))
 
-//
-//calendar.enumerateDates(startingAfter: Date(), matching: DateComponents(calendar: .current, timeZone: .current, year: 2022, month: 3, day: 24), matchingPolicy: .nextTime) { result, exactMatch, stop in
-//
-//    print(result, exactMatch, stop)
-//
-//}
-
-
-//let nextDate = calendar.nextDate(after: date0,
-//                                 matching: DateComponents(calendar: calendar, timeZone: timeZone, weekday: 3, weekOfMonth: 3),
-//                                 matchingPolicy: .strict,
-//                                 repeatedTimePolicy: .first,
-//                                 direction: .forward)!
-//
-//print(dateFormatter.string(from: nextDate))
+if #available(iOS 18.0, *) {
+    let rule0 = Legacy.RecurrenceRule(frequency: .weekly, interval: 1)
+    let rule1 = Calendar.RecurrenceRule(calendar: calendar, frequency: .weekly)
+    
+    let data0 = try! JSONEncoder().encode(rule0)
+    let data1 = try! JSONEncoder().encode(rule1)
+    
+    let json0 = try! JSONSerialization.jsonObject(with: data0)
+    let json1 = try! JSONSerialization.jsonObject(with: data1)
+    
+    print(json0)
+    print(json1)
+}
 

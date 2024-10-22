@@ -16,14 +16,14 @@ extension Calendar {
 
     private func startDayOfYear(_ date: Date) -> Date { dateComponents([.calendar, .timeZone, .year], from: date).date! }
 
-    private func hasNotExceededOccurrenceCount(_ count: Int, end: RecurrenceRule.End?) -> Bool {
+    private func hasNotExceededOccurrenceCount(_ count: Int, end: Legacy.RecurrenceRule.End?) -> Bool {
         if let end = end, case let .occurrenceCount(occurrenceCount) = end {
             return count <= occurrenceCount
         }
         return true
     }
 
-    private func matchesCycle(_ date: Date, of recurrenceRule: RecurrenceRule, occurenceDate: Date, end: RecurrenceRule.End?) -> Bool {
+    private func matchesCycle(_ date: Date, of recurrenceRule: Legacy.RecurrenceRule, occurenceDate: Date, end: Legacy.RecurrenceRule.End?) -> Bool {
         if let end = end, case let .endDate(endDate) = end, endDate < date {
             return false
         }
@@ -65,14 +65,14 @@ extension Calendar {
         }
     }
 
-    public func contains(_ date: Date, in recurrenceRules: [RecurrenceRule], occurenceDate: Date) -> Bool {
+    public func contains(_ date: Date, in recurrenceRules: [Legacy.RecurrenceRule], occurenceDate: Date) -> Bool {
         if recurrenceRules.isEmpty { return false }
         return recurrenceRules.contains { contains(date, in: $0, occurenceDate: occurenceDate) }
     }
 
-    public func contains(_ date: Date, in recurrenceRule: RecurrenceRule, occurenceDate: Date) -> Bool {
+    public func contains(_ date: Date, in recurrenceRule: Legacy.RecurrenceRule, occurenceDate: Date) -> Bool {
         guard date >= occurenceDate else { return false }
-        let end: RecurrenceRule.End? = recurrenceRule.recurrenceEnd
+        let end: Legacy.RecurrenceRule.End? = recurrenceRule.recurrenceEnd
         let isMatchingCycle = matchesCycle(date, of: recurrenceRule, occurenceDate: occurenceDate, end: end)
         switch recurrenceRule.frequency {
             case .daily: return isMatchingCycle

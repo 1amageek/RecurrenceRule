@@ -7,132 +7,135 @@
 
 import Foundation
 
-public struct RecurrenceRule: Codable {
+public enum Legacy {
     
-    public enum Frequency: String, Codable, CaseIterable, Hashable {
-        case daily
-        case weekly
-        case monthly
-        case yearly
-    }
-    
-    public enum Weekday: Int, Codable, CaseIterable, Hashable, RawRepresentable {
-        case sunday = 1
-        case monday = 2
-        case tuesday = 3
-        case wednesday = 4
-        case thursday = 5
-        case friday = 6
-        case saturday = 7
+    public struct RecurrenceRule: Codable {
         
-        public var symbol: String {
-            var calendar: Calendar = Calendar(identifier: .iso8601)
-            calendar.locale = .autoupdatingCurrent
-            let index: Int = rawValue - 1
-            return calendar.weekdaySymbols[index]
+        public enum Frequency: String, Codable, CaseIterable, Hashable {
+            case daily
+            case weekly
+            case monthly
+            case yearly
         }
-    }
-    
-    public enum Month: Int, Codable, CaseIterable, Hashable, RawRepresentable {
-        case january = 1
-        case february = 2
-        case march = 3
-        case april = 4
-        case may = 5
-        case june = 6
-        case july = 7
-        case august = 8
-        case september = 9
-        case october = 10
-        case november = 11
-        case december = 12
         
-        public var text: String {
-            let calendar: Calendar = Calendar(identifier: .gregorian)
-            let index: Int = rawValue - 1
-            return calendar.monthSymbols[index]
-        }
-    }
-    
-    public struct DayOfWeek: Codable, Hashable {
-        public var dayOfTheWeek: Weekday
-        public var weekNumber: Int
-        
-        public init(dayOfTheWeek: Weekday, weekNumber: Int = 0) {
+        public enum Weekday: Int, Codable, CaseIterable, Hashable, RawRepresentable {
+            case sunday = 1
+            case monday = 2
+            case tuesday = 3
+            case wednesday = 4
+            case thursday = 5
+            case friday = 6
+            case saturday = 7
             
-            /// Values are from 1 to 7, with Sunday being 1.
-            self.dayOfTheWeek = dayOfTheWeek
-            
-            /// Values range from –53 to 53.
-            self.weekNumber = weekNumber
+            public var symbol: String {
+                var calendar: Calendar = Calendar(identifier: .iso8601)
+                calendar.locale = .autoupdatingCurrent
+                let index: Int = rawValue - 1
+                return calendar.weekdaySymbols[index]
+            }
         }
-
-        public static var sunday: Self { DayOfWeek(dayOfTheWeek: .sunday) }
-        public static var monday: Self { DayOfWeek(dayOfTheWeek: .monday) }
-        public static var tuesday: Self { DayOfWeek(dayOfTheWeek: .tuesday) }
-        public static var wednesday: Self { DayOfWeek(dayOfTheWeek: .wednesday) }
-        public static var thursday: Self { DayOfWeek(dayOfTheWeek: .thursday) }
-        public static var friday: Self { DayOfWeek(dayOfTheWeek: .friday) }
-        public static var saturday: Self { DayOfWeek(dayOfTheWeek: .saturday) }
-    }
-    
-    public enum End: Codable, Hashable {
-        case endDate(Date)
-        case occurrenceCount(Int)
-    }
-    
-    public var frequency: Frequency
-    
-    public var recurrenceEnd: End?
-    
-    public var interval: Int
-
-    public var offset: Int
-    
-    /// Values of 1 to 7 correspond to Sunday through Saturday. A value of 0 indicates that this property is not set for the recurrence rule.
-    public var firstDayOfTheWeek: Int = 0       // 最初の曜日
-    
-    /// This property value is valid only for recurrence rules that were initialized with specific days of the week and a frequency type of Weekly, Monthly, or Yearly.
-    public var daysOfTheWeek: [DayOfWeek]?      // 何曜日、第何週の何曜日
-    
-    /// Values can be from 1 to 31 and from -1 to -31.
-    public var daysOfTheMonth: [Int]?           // 月の何日目
-    
-    /// Values can be from 1 to 366 and from -1 to -366.
-    public var daysOfTheYear: [Int]?            // 年の何日目
-    
-    /// Values can be from 1 to 53 and from -1 to -53.
-    public var weeksOfTheYear: [Int]?           // 年の何週目
-    
-    /// Values can be from 1 to 12.
-    public var monthsOfTheYear: [Month]?          // 年の何ヶ月目
-    
-    public init(
-        frequency: Frequency,
-        recurrenceEnd: End? = nil,
-        interval: Int,
-        offset: Int = 0,
-        firstDayOfTheWeek: Int = 0,
-        daysOfTheWeek: [DayOfWeek]? = nil,
-        daysOfTheMonth: [Int]? = nil,
-        daysOfTheYear: [Int]? = nil,
-        weeksOfTheYear: [Int]? = nil,
-        monthsOfTheYear: [Month]? = nil
-    ) {
-        self.frequency = frequency
-        self.recurrenceEnd = recurrenceEnd
-        self.interval = interval
-        self.offset = offset
-        self.firstDayOfTheWeek = firstDayOfTheWeek
-        self.daysOfTheWeek = daysOfTheWeek
-        self.daysOfTheMonth = daysOfTheMonth
-        self.daysOfTheYear = daysOfTheYear
-        self.weeksOfTheYear = weeksOfTheYear
-        self.monthsOfTheYear = monthsOfTheYear
+        
+        public enum Month: Int, Codable, CaseIterable, Hashable, RawRepresentable {
+            case january = 1
+            case february = 2
+            case march = 3
+            case april = 4
+            case may = 5
+            case june = 6
+            case july = 7
+            case august = 8
+            case september = 9
+            case october = 10
+            case november = 11
+            case december = 12
+            
+            public var text: String {
+                let calendar: Calendar = Calendar(identifier: .gregorian)
+                let index: Int = rawValue - 1
+                return calendar.monthSymbols[index]
+            }
+        }
+        
+        public struct DayOfWeek: Codable, Hashable {
+            public var dayOfTheWeek: Weekday
+            public var weekNumber: Int
+            
+            public init(dayOfTheWeek: Weekday, weekNumber: Int = 0) {
+                
+                /// Values are from 1 to 7, with Sunday being 1.
+                self.dayOfTheWeek = dayOfTheWeek
+                
+                /// Values range from –53 to 53.
+                self.weekNumber = weekNumber
+            }
+            
+            public static var sunday: Self { DayOfWeek(dayOfTheWeek: .sunday) }
+            public static var monday: Self { DayOfWeek(dayOfTheWeek: .monday) }
+            public static var tuesday: Self { DayOfWeek(dayOfTheWeek: .tuesday) }
+            public static var wednesday: Self { DayOfWeek(dayOfTheWeek: .wednesday) }
+            public static var thursday: Self { DayOfWeek(dayOfTheWeek: .thursday) }
+            public static var friday: Self { DayOfWeek(dayOfTheWeek: .friday) }
+            public static var saturday: Self { DayOfWeek(dayOfTheWeek: .saturday) }
+        }
+        
+        public enum End: Codable, Hashable {
+            case endDate(Date)
+            case occurrenceCount(Int)
+        }
+        
+        public var frequency: Frequency
+        
+        public var recurrenceEnd: End?
+        
+        public var interval: Int
+        
+        public var offset: Int
+        
+        /// Values of 1 to 7 correspond to Sunday through Saturday. A value of 0 indicates that this property is not set for the recurrence rule.
+        public var firstDayOfTheWeek: Int = 0       // 最初の曜日
+        
+        /// This property value is valid only for recurrence rules that were initialized with specific days of the week and a frequency type of Weekly, Monthly, or Yearly.
+        public var daysOfTheWeek: [DayOfWeek]?      // 何曜日、第何週の何曜日
+        
+        /// Values can be from 1 to 31 and from -1 to -31.
+        public var daysOfTheMonth: [Int]?           // 月の何日目
+        
+        /// Values can be from 1 to 366 and from -1 to -366.
+        public var daysOfTheYear: [Int]?            // 年の何日目
+        
+        /// Values can be from 1 to 53 and from -1 to -53.
+        public var weeksOfTheYear: [Int]?           // 年の何週目
+        
+        /// Values can be from 1 to 12.
+        public var monthsOfTheYear: [Month]?          // 年の何ヶ月目
+        
+        public init(
+            frequency: Frequency,
+            recurrenceEnd: End? = nil,
+            interval: Int,
+            offset: Int = 0,
+            firstDayOfTheWeek: Int = 0,
+            daysOfTheWeek: [DayOfWeek]? = nil,
+            daysOfTheMonth: [Int]? = nil,
+            daysOfTheYear: [Int]? = nil,
+            weeksOfTheYear: [Int]? = nil,
+            monthsOfTheYear: [Month]? = nil
+        ) {
+            self.frequency = frequency
+            self.recurrenceEnd = recurrenceEnd
+            self.interval = interval
+            self.offset = offset
+            self.firstDayOfTheWeek = firstDayOfTheWeek
+            self.daysOfTheWeek = daysOfTheWeek
+            self.daysOfTheMonth = daysOfTheMonth
+            self.daysOfTheYear = daysOfTheYear
+            self.weeksOfTheYear = weeksOfTheYear
+            self.monthsOfTheYear = monthsOfTheYear
+        }
     }
 }
 
-extension RecurrenceRule {
+extension Legacy.RecurrenceRule {
     
     public static func gregorian(
         frequency: Frequency,
@@ -145,7 +148,7 @@ extension RecurrenceRule {
         weeksOfTheYear: [Int]? = nil,
         monthsOfTheYear: [Month]? = nil
     ) -> Self {
-        RecurrenceRule(frequency: frequency,
+        Legacy.RecurrenceRule(frequency: frequency,
                        recurrenceEnd: recurrenceEnd,
                        interval: interval,
                        offset: offset,
@@ -168,7 +171,7 @@ extension RecurrenceRule {
         weeksOfTheYear: [Int]? = nil,
         monthsOfTheYear: [Month]? = nil
     ) -> Self {
-        RecurrenceRule(frequency: frequency,
+        Legacy.RecurrenceRule(frequency: frequency,
                        recurrenceEnd: recurrenceEnd,
                        interval: interval,
                        offset: offset,
@@ -181,7 +184,7 @@ extension RecurrenceRule {
     }
 }
 
-extension RecurrenceRule.End {
+extension Legacy.RecurrenceRule.End {
     
     enum CodingKeys: CodingKey {
         case endDate
@@ -217,9 +220,9 @@ extension RecurrenceRule.End {
     }
 }
 
-extension RecurrenceRule: Hashable {
+extension Legacy.RecurrenceRule: Hashable {
     
-    public static func == (lhs: RecurrenceRule, rhs: RecurrenceRule) -> Bool {
+    public static func == (lhs: Legacy.RecurrenceRule, rhs: Legacy.RecurrenceRule) -> Bool {
         lhs.hashValue == rhs.hashValue
     }
     
